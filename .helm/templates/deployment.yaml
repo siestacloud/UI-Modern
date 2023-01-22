@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
 
-  name: werf-guide-app
+  name: portfolio
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: werf-guide-app
+      app: portfolio
   template:
     metadata:
       labels:
-        app: werf-guide-app
+        app: portfolio
     spec:
       imagePullSecrets:
       - name: registrysecret
       containers:
-      - name: app
-        image: {{ .Values.werf.image.app }}
+      - name: portfolio-app
+        image: {{ .Values.werf.image.portfolio }}
         command: ["/app/start.sh"]
         ports:
         - containerPort: 8000
