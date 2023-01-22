@@ -14,4 +14,3 @@ cat .helm/values-prod-encrypted.yaml | werf helm secret decrypt -o .helm/values-
 
 # зашифровать
 cat .helm/values-prod-decrypted.yaml | werf helm secret encrypt -o .helm/values-prod-encrypted.yaml
-.
