@@ -30,7 +30,7 @@ spec:
         image: "{{ .Values.werf.image.portfolio }}"
         ports: 
           - name: app
-            containerPort: {{ .Values.port }}
+            containerPort: 8080
             protocol: TCP
         env:
         - name: APP

@@ -9,8 +9,6 @@ spec:
     app: "{{ .Chart.Name }}"
   ports:
   - name: http
-    port: {{ .Values.port }}
+    port: 8080
     protocol: TCP
-  - name: metrics
-    port: 9100
-    protocol: TCP
+
