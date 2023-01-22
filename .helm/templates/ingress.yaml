@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 {{ end }}
 {{ if (eq .Values.werf.env "prod") }}
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 {{ end }}
 spec:
   ingressClassName: nginx
