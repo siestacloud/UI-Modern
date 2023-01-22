@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Chart.Name }}
-annotations: 
+  annotations: 
 {{ if (eq .Values.werf.env "dev") }}
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 {{ end }}
