@@ -1,0 +1,5 @@
+*.zip
+*.tar
+*.tar.gz
+**/*-decrypted.yaml
+.werf_secret_key

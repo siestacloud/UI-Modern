@@ -1,0 +1,6 @@
+project: portfolio
+configVersion: 1
+
+---
+image: front-portfolio
+dockerfile: Dockerfile

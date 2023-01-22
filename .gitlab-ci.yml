@@ -1,0 +1,48 @@
+stages:
+  - build
+  - deploy-dev
+  - deploy-prod
+  - cleanup
+image: "registry.werf.io/werf/werf:latest"
+Build and Publish:
+  stage: build
+  script:
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - werf build
+  only: [merge_requests]
+  tags: [kubernetes-runner-for-werf]
+
+.base_deploy: &base_deploy
+  script:
+    - ls -la
+    - echo $RUNNER_EXECUTOR
+    - echo $RUNNER_EXECUTOR
+    - echo $CI_ENVIRONMENT_NAME
+    - echo $WERF_SECRET_KEY
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - cat .helm/values-${CI_ENVIRONMENT_NAME}-encrypted.yaml | werf helm secret decrypt -o .helm/values-${CI_ENVIRONMENT_NAME}-decrypted.yaml
+    - werf converge --namespace="infra-${CI_ENVIRONMENT_NAME}" --skip-build --set "global.env_url=$(echo ${CI_ENVIRONMENT_URL} | cut -d / -f 3)" --values=".helm/values-${CI_ENVIRONMENT_NAME}-decrypted.yaml"
+    - rm -rf .helm/values-${CI_ENVIRONMENT_NAME}-decrypted.yaml
+  dependencies:
+    - Build and Publish
+  only: [merge_requests]
+  allow_failure: false
+
+Deploy to Dev:
+  <<: *base_deploy
+  stage: deploy-dev
+  environment:
+    name: dev
+    url: https://dev
+  tags: [kubernetes-runner-for-werf]
+  needs: [Build and Publish]
+
+Deploy to Prod:
+  <<: *base_deploy 
+  stage: deploy-prod
+  environment:
+    name: prod
+    url: https://prod
+  needs: [Build and Publish, Deploy to Dev]
+  tags: [kubernetes-runner-for-werf]
+  when: manual
