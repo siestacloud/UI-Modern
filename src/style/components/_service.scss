@@ -1,0 +1,46 @@
+
+.services {
+  display: grid;
+  grid-template: 1fr / minmax(15px, 1fr) minmax(10px, 1652px) minmax(15px, 1fr);
+  background-color: $light;
+  padding: 100px 0px;
+  text-align: center;
+  &__wrapper {
+    grid-area: 1/2;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  &__item {
+    flex-basis: 25%;
+    // height: 33%;
+    text-align: center;
+    background-color: $grey;
+    padding: 15px;
+    transition: background-color 0.3s ease-in;
+    &:hover {
+      background-color: $blue;
+    }
+  }
+  &__img {
+  }
+  &__block_title {
+    margin: 10px 0px 20px 0px;
+    letter-spacing: 2px;
+    line-height: 21px;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: $dark;
+  }
+  &__block_text {
+    font-size: 1.2em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    line-height: 21px;
+    color: $dark;
+  }
+}

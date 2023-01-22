@@ -1,23 +1,60 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-
-  name: portfolio
+  name: "{{ .Chart.Name }}"
+  labels:
+    app: "{{ .Chart.Name }}"
 spec:
-  replicas: 2
+  revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app: portfolio
+      app: "{{ .Chart.Name }}"
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: portfolio
+        app: "{{ .Chart.Name }}"
     spec:
+{{ if (eq .Values.werf.env "prod") }}
+      # nodeName: node-cloud-1
+{{ end }}
       imagePullSecrets:
-      - name: registrysecret
+      - name: pull
       containers:
-      - name: portfolio-app
-        image: {{ .Values.werf.image.portfolio }}
-        command: ["/app/start.sh"]
+      - name: "{{ .Chart.Name }}"
+        image: "{{ .Values.werf.image.portfolio }}"
+        ports: 
+          - name: app
+            containerPort: {{ .Values.port }}
+            protocol: TCP
+        env:
+        - name: APP
+          value: {{ .Values.werf.name }}
+      - name: exporter
+        image: nginx/nginx-prometheus-exporter:0.10.0
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
         ports:
-        - containerPort: 8000
+        - name: metrics
+          containerPort: 9100
+          protocol: TCP
+        # livenessProbe:
+        #   httpGet:
+        #     path: /healthz
+        #     port: 9100
+        #     scheme: HTTP
+        # readinessProbe:
+        #   httpGet:
+        #     path: /readyz
+        #     port: 9100
+        #     scheme: HTTP
+        args:
+          - -nginx.scrape-uri=http://127.0.0.1:8080/stub_status 
+          - -web.listen-address=:9100

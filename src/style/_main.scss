@@ -1,0 +1,74 @@
+// <ОСНОВНОЙ БЛОК>
+
+.main {
+  grid-area: main;
+}
+
+.about {
+  display: grid;
+  grid-template: 1fr / minmax(15px, 1fr) minmax(10px, 1252px) minmax(15px, 1fr);
+  padding: 100px 0px;
+  text-align: center;
+  &__wrapper {
+    grid-area: 1/2;
+  }
+
+  .content {
+    &__row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      text-align: justify;
+      p {
+        flex-basis: 50%;
+        font-size: 1.2em;
+        font-weight: 300;
+        letter-spacing: 2px;
+        line-height: 21px;
+        color: #fff;
+      }
+      @media (max-width: 767px) {
+        flex-direction: column;
+      }
+    }
+    &__img {
+      min-height: 500px;
+      flex-basis: 40%;
+      background-image: url(../assets/img/me/facedawn.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+
+
+.title {
+  display: block;
+  color: $blue;
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  // padding: 7px 5px;
+}
+
+.subtitle {
+  margin: 40px 0px;
+  font-size: 1.5em;
+  font-weight: 500;
+  letter-spacing: 2px;
+  line-height: 21px;
+  color: $dark;
+}
+
+//  как только .white появляется измняю цвета элементов
+.white {
+  background-color: $dark;
+
+  & .title {
+    color: $light;
+  }
+  & .subtitle {
+    color: $light;
+  }
+}

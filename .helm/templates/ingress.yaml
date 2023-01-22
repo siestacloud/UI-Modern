@@ -1,19 +1,30 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
-    # kubernetes.io/ingress.class: nginx
-  name: portfolio
+  name: {{ .Chart.Name }}
+annotations: 
+{{ if (eq .Values.werf.env "dev") }}
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+{{ end }}
+{{ if (eq .Values.werf.env "prod") }}
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+{{ end }}
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: nginx
   rules:
   - host: {{ .Values.host }}
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
-            name: portfolio
+            name: {{ .Chart.Name }}
             port:
-              number: 8000
+              number: {{ .Values.port }}
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .Values.host }}
+    secretName: {{ .Chart.Name }}-tls
+---
