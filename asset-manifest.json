@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/UI-Modern/static/css/main.7729a0bb.css",
+    "main.js": "/UI-Modern/static/js/main.7a4700e1.js",
+    "static/media/facedawn.jpg": "/UI-Modern/static/media/facedawn.f8d8a52011a1dbda9886.jpg",
+    "static/media/back.jpg": "/UI-Modern/static/media/back.2d1aa2fca16042a208ae.jpg",
+    "index.html": "/UI-Modern/index.html",
+    "main.7729a0bb.css.map": "/UI-Modern/static/css/main.7729a0bb.css.map",
+    "main.7a4700e1.js.map": "/UI-Modern/static/js/main.7a4700e1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7729a0bb.css",
+    "static/js/main.7a4700e1.js"
+  ]
+}
